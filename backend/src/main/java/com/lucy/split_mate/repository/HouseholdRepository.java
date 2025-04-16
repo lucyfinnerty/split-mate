@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.lucy.split_mate.model.Household;
 
 @Repository
-public interface HouseholdRepository extends JpaRepository<Household, Integer>{
+public interface HouseholdRepository extends JpaRepository<Household, Long>{
 
 }

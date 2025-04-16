@@ -9,25 +9,30 @@ public class Roommate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String email;
-    Household household;
-    List<Payment> payments;
+    private Household household;
+
+    @OneToMany(mappedBy = "from")
+    private List<Payment> paymentsMade;
+    @OneToMany(mappedBy = "to")
+    private List<Payment> paymentsReceived;
 
     public Roommate() {}
-    public Roommate(int id, String name, String email, Household household, List<Payment> payments) {
+    public Roommate(Long id, String name, String email, Household household, List<Payment> paymentsMade, List<Payment> paymentsReceived) {
         this.id = id;
         this. name = name;
         this.email = email;
-        //this.household = household;
-        //this.payments = payments;
+        this.household = household;
+        this.paymentsMade = paymentsMade;
+        this.paymentsReceived = paymentsReceived;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {
@@ -48,10 +53,16 @@ public class Roommate {
     public void setHousehold(Household household) {
         this.household = household;
     }
-    public List<Payment> getPayments() {
-        return payments;
+    public List<Payment> getPaymentsMade() {
+        return paymentsMade;
     }
-    public void setPayment(List<Payment> payments) {
-        this.payments = payments;
+    public void setPaymentsMade(List<Payment> paymentsMade) {
+        this.paymentsMade = paymentsMade;
+    }
+    public List<Payment> getPaymentsReceived() {
+        return paymentsReceived;
+    }
+    public void setPaymentsReceived(List<Payment> paymentsReceived) {
+        this.paymentsReceived = paymentsReceived;
     }
 }

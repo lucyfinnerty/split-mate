@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.lucy.split_mate.model.Expense;
 
 @Repository
-public interface ExpenseRepository extends JpaRepository<Expense, Integer>{
+public interface ExpenseRepository extends JpaRepository<Expense, Long>{
 
 }

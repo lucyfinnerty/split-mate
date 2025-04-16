@@ -9,7 +9,7 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String title;
     private double amount;
     private Roommate paidBy; // Roommate who paid for the expense
@@ -18,7 +18,7 @@ public class Expense {
     Household household; // Household to which the expense belongs
 
     public Expense() {}
-    public Expense(int id, String title, double amount, Roommate paidBy, String date, Map<Roommate, Double> splitWith, Household household) {
+    public Expense(Long id, String title, double amount, Roommate paidBy, String date, Map<Roommate, Double> splitWith, Household household) {
         this.id = id;
         this.title = title;
         this.amount = amount;
@@ -27,10 +27,10 @@ public class Expense {
         this.splitWith = splitWith;
         this.household = household;
     }
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getTitle() {

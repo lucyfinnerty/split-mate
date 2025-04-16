@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.lucy.split_mate.model.Roommate;
 
 @Repository
-public interface RoommateRepository extends JpaRepository<Roommate, Integer> {
+public interface RoommateRepository extends JpaRepository<Roommate, Long> {
 
 }
