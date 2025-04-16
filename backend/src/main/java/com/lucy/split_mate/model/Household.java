@@ -46,27 +46,4 @@ public class Household {
     public void setExpenses(List<Expense> expenses) {
         this.expenses = expenses;
     }
-    public void addRoommate(Roommate roommate) {
-        this.roommates.add(roommate);
-    }
-    public void removeRoommate(Roommate roommate) {
-        this.roommates.remove(roommate);
-    }
-    public void addExpense(Expense expense) {
-        this.expenses.add(expense);
-    }
-    public void removeExpense(Expense expense) {
-        this.expenses.remove(expense);
-    }
-    public void clearRoommates() {
-        this.roommates.clear();
-    }
-    public void clearExpenses() {
-        this.expenses.clear();
-    }
-    public void clearAll() {
-        this.roommates.clear();
-        this.expenses.clear();
-    }
-    
 }

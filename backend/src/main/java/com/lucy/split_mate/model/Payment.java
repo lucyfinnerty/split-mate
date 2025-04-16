@@ -60,15 +60,4 @@ public class Payment {
     public void setDate(String date) {
         this.date = date;
     }
-    @Override
-    public String toString() {
-        return "Payment{" +
-                "id=" + id +
-                ", from=" + from +
-                ", to=" + to +
-                ", amount=" + amount +
-                ", method='" + method + '\'' +
-                ", date='" + date + '\'' +
-                '}';
-    }
 }

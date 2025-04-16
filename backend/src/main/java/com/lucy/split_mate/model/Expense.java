@@ -69,31 +69,4 @@ public class Expense {
     public void setHousehold(Household household) {
         this.household = household;
     }
-    @Override
-    public String toString() {
-        return "Expense{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", amount=" + amount +
-                ", paidBy=" + paidBy +
-                ", date='" + date + '\'' +
-                ", splitWith=" + splitWith +
-                ", household=" + household +
-                '}';
-    }
-    public void addSplitWith(Roommate roommate, double amount) {
-        this.splitWith.put(roommate, amount);
-    }
-    public void removeSplitWith(Roommate roommate) {
-        this.splitWith.remove(roommate);
-    }
-    public void clearSplitWith() {
-        this.splitWith.clear();
-    }
-    public void clearAll() {
-        this.splitWith.clear();
-    }
-    public void clearHousehold() {
-        this.household = null;
-    }
 }
