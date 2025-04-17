@@ -1,14 +1,18 @@
 package com.lucy.split_mate.service;
 
+import java.util.List;
+
+import com.lucy.split_mate.model.*;
+
 public interface ExpenseServiceInterface {
-    public void addExpense(Long id, String name, String description, Double amount, String date, String category, Long householdId);
-    public void removeExpense(Long id);
-    public void getExpenseById(Long id);
-    public void getAllExpenses();
-    public void getHouseholdExpenses(Long householdId);
-    public void getRoommateExpenses(Long roommateId);
-    public void updateExpense(Long id, String name, String description, Double amount, String date, String category);
+    public Expense addExpense(Expense expense);
+    public void removeExpense(Expense expense);
+    public Expense getExpenseById(Long id);
+    public List<Expense> getAllExpenses();
+    public List<Expense> getHouseholdExpenses(Long householdId);
+    public List<Expense> getRoommateExpenses(Long roommateId);
+    public Expense updateExpense(Expense expense);
     public void splitExpense(Long expenseId, Long[] roommateIds);
     public void markExpenseAsPaid(Long expenseId, Long roommateId);
-    public void getUnpaidExpenses();
+    public List<Expense> getUnpaidExpenses();
 }
