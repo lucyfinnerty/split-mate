@@ -14,6 +14,7 @@ public class Household {
 
     @OneToMany(mappedBy = "household")
     List<Roommate> roommates;
+    
     @OneToMany(mappedBy = "household")
     List<Expense> expenses;
 

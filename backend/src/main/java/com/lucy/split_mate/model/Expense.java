@@ -1,6 +1,6 @@
 package com.lucy.split_mate.model;
 
-import java.util.Map;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -10,15 +10,24 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String title;
     private double amount;
-    private Roommate paidBy; // Roommate who paid for the expense
     private String date; // Date of the expense
-    Map<Roommate, Double> splitWith; // Amount each roommate owes for the expense
+
+    @ManyToOne
+    @JoinColumn(name = "paid_by_id")
+    private Roommate paidBy; // Roommate who paid for the expense
+
+    @ManyToOne
+    @JoinColumn(name = "household_id")
     Household household; // Household to which the expense belongs
 
+    @OneToMany(mappedBy = "expense", cascade = CascadeType.ALL)
+    private List<SplitShare> splitWith;
+
     public Expense() {}
-    public Expense(Long id, String title, double amount, Roommate paidBy, String date, Map<Roommate, Double> splitWith, Household household) {
+    public Expense(Long id, String title, double amount, Roommate paidBy, String date, List<SplitShare> splitWith, Household household) {
         this.id = id;
         this.title = title;
         this.amount = amount;
@@ -57,10 +66,10 @@ public class Expense {
     public void setDate(String date) {
         this.date = date;
     }
-    public Map<Roommate, Double> getSplitWith() {
+    public List<SplitShare> getSplitWith() {
         return splitWith;
     }
-    public void setSplitWith(Map<Roommate, Double> splitWith) {
+    public void setSplitWith(List<SplitShare> splitWith) {
         this.splitWith = splitWith;
     }
     public Household getHousehold() {

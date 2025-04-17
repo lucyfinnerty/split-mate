@@ -12,6 +12,9 @@ public class Roommate {
     private Long id;
     private String name;
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "household_id")
     private Household household;
 
     @OneToMany(mappedBy = "from")
