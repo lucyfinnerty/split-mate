@@ -10,8 +10,15 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "payer_id")
     private Roommate from; // Roommate ID of the person who made the payment
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
     private Roommate to; // Roommate ID of the person who received the payment
+    
     private double amount; // Amount paid
     private String method; // Payment method (e.g., "Venmo", "Manual")
     private LocalDate date; // Date of the payment

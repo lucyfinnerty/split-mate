@@ -24,16 +24,16 @@ public class Expense {
     Household household; // Household to which the expense belongs
 
     @OneToMany(mappedBy = "expense", cascade = CascadeType.ALL)
-    private List<SplitShare> splitWith;
+    private List<SplitShare> splitShares;
 
     public Expense() {}
-    public Expense(Long id, String title, double amount, Roommate paidBy, String date, List<SplitShare> splitWith, Household household) {
+    public Expense(Long id, String title, double amount, Roommate paidBy, String date, List<SplitShare> splitShares, Household household) {
         this.id = id;
         this.title = title;
         this.amount = amount;
         this.paidBy = paidBy;
         this.date = date;
-        this.splitWith = splitWith;
+        this.splitShares = splitShares;
         this.household = household;
     }
     public Long getId() {
@@ -66,11 +66,11 @@ public class Expense {
     public void setDate(String date) {
         this.date = date;
     }
-    public List<SplitShare> getSplitWith() {
-        return splitWith;
+    public List<SplitShare> getSplitShares() {
+        return splitShares;
     }
-    public void setSplitWith(List<SplitShare> splitWith) {
-        this.splitWith = splitWith;
+    public void setSplitShares(List<SplitShare> splitShares) {
+        this.splitShares = splitShares;
     }
     public Household getHousehold() {
         return household;

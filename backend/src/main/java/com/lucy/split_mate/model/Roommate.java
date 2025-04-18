@@ -22,14 +22,18 @@ public class Roommate {
     @OneToMany(mappedBy = "to")
     private List<Payment> paymentsReceived;
 
+    @OneToMany(mappedBy = "roommate", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SplitShare> splitShares;
+
     public Roommate() {}
-    public Roommate(Long id, String name, String email, Household household, List<Payment> paymentsMade, List<Payment> paymentsReceived) {
+    public Roommate(Long id, String name, String email, Household household, List<Payment> paymentsMade, List<Payment> paymentsReceived, List<SplitShare> splitShares) {
         this.id = id;
         this. name = name;
         this.email = email;
         this.household = household;
         this.paymentsMade = paymentsMade;
         this.paymentsReceived = paymentsReceived;
+        this.splitShares = splitShares;
     }
 
     public Long getId() {
@@ -67,5 +71,11 @@ public class Roommate {
     }
     public void setPaymentsReceived(List<Payment> paymentsReceived) {
         this.paymentsReceived = paymentsReceived;
+    }
+    public List<SplitShare> getSplitShares() { 
+        return splitShares; 
+    }
+    public void setSplitShares(List<SplitShare> splitShares) { 
+        this.splitShares = splitShares; 
     }
 }
