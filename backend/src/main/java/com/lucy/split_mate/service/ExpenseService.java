@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.lucy.split_mate.model.*;
 import com.lucy.split_mate.repository.*;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ExpenseService implements ExpenseServiceInterface {
 
@@ -48,9 +50,12 @@ public class ExpenseService implements ExpenseServiceInterface {
     @Override
     public List<Expense> getRoommateExpenses(Long roommateId) {
         Roommate roommate = roommateRepository.findById(roommateId)
-            .orElseThrow(() -> new IllegalArgumentException("Roommate not found."))
-        return roommate.findAll().stream()
-            .filter(e -> e.getPaidBy().equals(roommate) || e.getSplitWith().containsKey(roommate))
+            .orElseThrow(() -> new IllegalArgumentException("Roommate not found."));
+
+        return expenseRepository.findAll().stream()
+            .filter(e -> e.getPaidBy().equals(roommate) || 
+                         e.getSplitShares().stream()
+                             .anyMatch(ss -> ss.getRoommate().equals(roommate)))
             .toList();
     }
     @Override
@@ -58,26 +63,26 @@ public class ExpenseService implements ExpenseServiceInterface {
         return expenseRepository.save(expense);
     }
     @Override
+    @Transactional
     public void splitExpense(Long expenseId, Long[] roommateIds) {
         Expense expense = getExpenseById(expenseId);
         double amountPerRoommate = expense.getAmount() / roommateIds.length;
 
-        List<SplitShare> shares = new ArrayList<>();
+        List<SplitShare> splitShares = new ArrayList<>();
 
         for (Long roommateId : roommateIds) {
             Roommate roommate = roommateRepository.findById(roommateId)
                 .orElseThrow(() -> new IllegalArgumentException("Roommate not found with ID: " + roommateId));
 
-            SplitShare share = new SplitShare();
-            share.setExpense(expense);
-            share.setRoommate(roommate);
-            share.setAmountOwed(amountPerRoommate);
-            share.setPaid(false);
+            SplitShare splitShare = new SplitShare();
+            splitShare.setRoommate(roommate);
+            splitShare.setAmount(amountPerRoommate);
+            splitShare.setExpense(expense);
 
-            shares.add(share);
+            splitShares.add(splitShare);
         }
-        expense.setSplitShares(shares);
-        expenseRepository.save(expense);
+        expense.setSplitShares(splitShares);
+        return;
     }
     @Override
     public void markExpenseAsPaid(Long expenseId, Long roommateId) {
@@ -85,9 +90,11 @@ public class ExpenseService implements ExpenseServiceInterface {
         Roommate roommate = roommateRepository.findById(roommateId)
             .orElseThrow(() -> new IllegalArgumentException("Roommate not found"));
 
-        if (expense.getSplitWith().containsKey(roommate)) {
-            expense.getSplitWith().remove(roommate);
-            expenseRepository.save(expense);
+        List<SplitShare> shares = expense.getSplitShares();
+        boolean removed = shares.removeIf(share -> share.getRoommate().equals(roommate));
+
+        if (removed) {
+            expenseRepository.save(expense); // JPA will remove orphaned SplitShare entries
         } else {
             throw new IllegalArgumentException("Roommate does not owe anything for this expense");
         }
@@ -96,7 +103,7 @@ public class ExpenseService implements ExpenseServiceInterface {
     @Override
     public List<Expense> getUnpaidExpenses() {
         return expenseRepository.findAll().stream()
-            .filter(e -> !e.getSplitWith().isEmpty())
+            .filter(e -> !e.getSplitShares().isEmpty())
             .toList();
     }
 }

@@ -1,15 +1,14 @@
 package com.lucy.split_mate.service;
 
+import java.util.List;
+
+import com.lucy.split_mate.model.Payment;
+
 public interface PaymentServiceInterface {
-    public void addPayment(Long id, String name, String description, Double amount, String date, String category, Long householdId);
-    public void removePayment(Long id);
-    public void getPaymentById(Long id);
-    public void getAllPayments();
-    public void getHouseholdPayments(Long householdId);
-    public void getRoommatePayments(Long roommateId);
-    public void updatePayment(Long id, String name, String description, Double amount, String date, String category);
-    public void splitPayment(Long paymentId, Long[] roommateIds);
-    public void markPaymentAsPaid(Long paymentId, Long roommateId);
-    public void getUnpaidPayments();
-    public void getPaidPayments();
+    public Payment addPayment(Payment payment);
+    public void removePayment(Payment payment);
+    public Payment getPaymentById(Long id);
+    public List<Payment> getAllPayments();
+    public List<Payment> getPaymentsByRoommate(Long roommateId);
+    public List<Payment> getPaymentsBetweenRoommates(Long id1, Long id2);
 }
