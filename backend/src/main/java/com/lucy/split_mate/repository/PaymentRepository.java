@@ -9,4 +9,5 @@ import com.lucy.split_mate.model.Payment;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
     List<Payment> findByFromIdOrToId(Long fromId, Long toId);
+    List<Payment> findByFromIdAndToId(Long fromId, Long toId);
 }
